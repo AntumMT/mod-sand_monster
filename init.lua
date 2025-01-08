@@ -123,7 +123,6 @@ if not mobs.custom_spawn_monster then
 end
 
 
-		"default_desert_sand.png", 1)
 
 
 

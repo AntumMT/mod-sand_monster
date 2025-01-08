@@ -76,8 +76,14 @@ def updateNamespace(target):
 	lines = content.split("\n")
 	for idx in reversed(range(len(lines))):
 		li = lines[idx]
-		if li.startswith("mobs:register_egg(") or li.startswith("mobs:alias_mob(\"mobs:{}\"".format(mob_name)) or li == "-- spawn egg" or li == "-- compatibility with older mobs mod":
+		if li.startswith("mobs:alias_mob(\"mobs:{}\"".format(mob_name)) or li == "-- spawn egg" or li == "-- compatibility with older mobs mod":
 			lines.pop(idx)
+		elif li.startswith("mobs:register_egg("):
+			lines.pop(idx)
+			if len(lines) > idx:
+				if lines[idx].lstrip().startswith("\"default_desert_sand.png\""):
+					# remaining egg registration on following line
+					lines.pop(idx)
 		elif ".get_translator(\"mobs_monster\")" in li:
 			lines[idx] = li.replace("\"mobs_monster\"", "\"mobs_{}\"".format(mob_name))
 
